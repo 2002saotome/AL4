@@ -9,7 +9,7 @@ using namespace std;
 
 #pragma comment(lib, "d3dcompiler.lib")
 
-Object3d::Material Object3d::material;
+
 using namespace DirectX;
 using namespace Microsoft::WRL;
 
@@ -40,6 +40,8 @@ D3D12_INDEX_BUFFER_VIEW Object3d::ibView{};
 //unsigned short Object3d::indices[planeCount * 3];
 std::vector<Object3d::VertexPosNormalUv>Object3d::vertices;
 std::vector<unsigned short> Object3d::indices;
+
+Object3d::Material Object3d::material;
 
 void Object3d::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
 {
@@ -400,6 +402,7 @@ bool Object3d::LoadTexture(const std::string& directoryPath, const std::string& 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{}; // 設定構造体
 	D3D12_RESOURCE_DESC resDesc = texbuff->GetDesc();
 
+
 	srvDesc.Format = resDesc.Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
@@ -516,7 +519,6 @@ void Object3d::CreateModel()
 			//法線ベクトルデータに追加
 			normals.emplace_back(normal);
 		}
-
 		//先頭文字列がmtllibならマテリアル
 		if (key == "mtllib")
 		{
@@ -530,8 +532,6 @@ void Object3d::CreateModel()
 	//ファイル閉じる
 	file.close();
 	std::vector<VertexPosNormalUv> realVertices;
-
-
 
 
 	// 頂点座標の計算（重複あり）
